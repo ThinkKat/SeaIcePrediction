@@ -38,6 +38,7 @@ class ModelController:
                 
 
     def trainModel(self, dataset, val_dataset, epochs, shuffle, batch_size, callbacks, steps_per_epoch, validation_steps):
+        pass
         if dataset is generator or tf.utils.Sequence:
             self.history = model.fit(
                 x = dataset, batch_size = batch_size, epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset, steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)

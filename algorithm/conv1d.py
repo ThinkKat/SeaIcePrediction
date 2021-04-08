@@ -20,7 +20,7 @@ class SeaIceConv1D(BaseModel):
         _kernel_size = kwargs['kernel_size']
         _strides = kwargs['strides'] if 'strides' in kwargs else [1] * nLayers
         _paddings = kwargs['paddings']
-        _activation = kwargs['activations']
+        _activation = kwargs['activation']
         _useBias = kwargs['use_bias']
         _kernelInitializer = kwargs['kernel_initializer'] if 'kernel_initializer' in kwargs else 'glorot_uniform'
         _biasInitializer = kwargs['bias_initializer'] if 'bias_initializer' in kwargs else 'zeros'
@@ -31,10 +31,10 @@ class SeaIceConv1D(BaseModel):
 
         for i in range(nLayers):
             self.model.add(tf.keras.layers.Conv1D(
-                filters=_filters[i], kernel_size=_kernel_size[i], strides=_strides[i], padding=_paddings[i], use_bias=_useBias[i], avtivation=_activation[i], kernel_initializer=_kernelInitializer[i], bias_initializer=_biasInitializer[i]), name="Conv1D_{}".format(i))
+                filters=_filters[i], kernel_size=_kernel_size[i], strides=_strides[i], padding=_paddings[i], use_bias=_useBias, activation=_activation, kernel_initializer=_kernelInitializer, bias_initializer=_biasInitializer, name="Conv1D_{}".format(i)))
             # batch normalization layers
             if _batchNormalize[i]:
-                self.model.add(tf.keras.layers.BatchNormalization(), name="Batch_Norm_{}".format(i))
+                self.model.add(tf.keras.layers.BatchNormalization(name="Batch_Norm_{}".format(i)))
 
-        if _outputAcivation is not None:
+        if _outputActivation is not None:
             self.model.add(tf.keras.layers.Activation(_outputActivation, name="output"))
