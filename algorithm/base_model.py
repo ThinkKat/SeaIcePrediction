@@ -7,7 +7,7 @@ class for making the model
 
 class BaseModel:
 
-    def __init__(self, in_shape, out_shape):
+    def __init__(self, in_shape):
         '''
         in_shape: tuple
         '''
