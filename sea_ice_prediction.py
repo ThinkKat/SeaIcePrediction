@@ -23,6 +23,8 @@ class SeaIcePrediction:
         '''
 
         self.data = np.load(self.basePath + self.dataPath)
+        return self.data
+
 
     def make_datatransformer(self,dt_args):
         self.X_dt = DataTransformer(**dt_args)

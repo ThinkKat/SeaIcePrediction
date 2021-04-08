@@ -33,6 +33,7 @@ def obs_generator(path, features, label=None, transpose=False):
         else:
             featureArr = featureArr.reshape(-1)
         featuresArr.append(featureArr)
+    featuresArr = np.array(featuresArr)
 
     if label is not None:
         label_path = os.path.join(path, label)

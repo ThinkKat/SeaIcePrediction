@@ -10,7 +10,7 @@ from base_model import BaseModel
 class SeaIceConv1D(BaseModel):
 
     def __init__(self, in_shape):
-        super(SeaIceConv1D).__init__(in_shape)
+        super(SeaIceConv1D, self).__init__(in_shape)
 
     def makeModel(self, **kwargs):
 
