@@ -37,11 +37,11 @@ class ModelController:
             
                 
 
-    def trainModel(self, dataset, val_dataset, epochs, shuffle, batch_size, callbacks, steps_per_epoch, validation_steps):
+    def trainModel(self, dataset, val_dataset, epochs, shuffle, batch_size, callbacks =None, steps_per_epoch=50, validation_steps=1):
         pass
-        if dataset is generator or tf.utils.Sequence:
-            self.history = model.fit(
-                x = dataset, batch_size = batch_size, epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset, steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)
+        if dataset is 'generator' or tf.keras.utils.Sequence:
+            self.history = self.model.fit(
+                x = dataset.repeat().batch(batch_size), epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset, steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)
         else:
             self.history = model.fit(
                 x = dataset[0], y=dataset[1], batch_size = batch_size, epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset, steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)

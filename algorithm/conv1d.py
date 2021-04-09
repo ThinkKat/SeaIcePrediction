@@ -4,7 +4,7 @@ SeaIce Conv 1D model
 
 
 import tensorflow as tf
-from base_model import BaseModel
+from .base_model import BaseModel
 
 
 class SeaIceConv1D(BaseModel):
