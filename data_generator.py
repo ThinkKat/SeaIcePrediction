@@ -36,7 +36,7 @@ class DataGenerator:
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
 
-    def _getValGenerator(Self):
+    def _getValGenerator(self):
         for (X, y) in zip(self.X_val_data, self.y_val_data):
             obs = obs_generator(self.path, X, y)
             X_data = self.X_dt.transform(obs[0])
@@ -50,7 +50,7 @@ class DataGenerator:
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
 
-    def _getValTransposeGenerator(Self):
+    def _getValTransposeGenerator(self):
         for (X, y) in zip(self.X_val_data, self.y_val_data):
             obs = obs_generator(self.path, X, y, True)
             X_data = self.X_dt.transform(obs[0])
