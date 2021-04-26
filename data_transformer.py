@@ -28,6 +28,20 @@ class DataTransformer:
             self.N = int(tmpN) + 1
         else:
             raise ValueError 
+        
+        # weight of redundant pixels 
+        self.weights = np.ones(self.data_shape)
+        weight = 0
+        for i in range(int(self.data_shape[1]/self.strides)):
+            if (self.filter_size > (i * self.strides)):
+                weight += 1
+                self.weights[:,i*self.strides:(i+1)*self.strides] = np.array([1/weight]*self.strides)
+            elif ((self.filter_size <= (i * self.strides)) and ((i * self.strides) <= self.data_shape[1] - self.filter_size)):
+                self.weights[:,i*self.strides:(i+1)*self.strides] = np.array([1/weight]*self.strides)
+            else:
+                weight -= 1
+                self.weights[:,i*self.strides:(i+1)*self.strides] = np.array([1/weight]*self.strides)
+
 
     def transform(self, data):
         '''
@@ -50,18 +64,10 @@ class DataTransformer:
 
         for (i, d) in enumerate(data):
             if(self.strides != self.filter_size): # 겹치는 부분 있을 때
-                if (i > 0):
-                    #겹치는 부분
-                    nparr[:, i*self.strides: (i-1)*self.strides+self.filter_size] = (d[:, 0: (self.filter_size-self.strides)] + nparr[:, i*self.strides: (i-1)*self.strides+self.filter_size]) / 2
-                    # print("Step: {} 겹치는 부분:[{}, {})".format(i, i*self.strides, (i-1)*self.strides+self.filter_size))
-
-                    #겹치치 않는 부분
-                    nparr[:, (i-1)*self.strides+self.filter_size: i*self.strides+self.filter_size] = d[:, (self.filter_size-self.strides):self.filter_size]
-                    # print("Step: {} 겹치지 않는 부분:[{}, {})".format(i, (i-1)*self.strides+self.filter_size, i*self.strides+self.filter_size))
-                else:
-                    nparr[:, 0: self.filter_size] = d
+                #겹치는 부분
+                nparr[:, i*self.strides: i*self.strides+self.filter_size] += d * self.weights[:, i*self.strides: i*self.strides+self.filter_size]
 
             else: # 겹치는 부분 없을 때
                 nparr[:, i*self.strides: i*self.strides+self.filter_size] = d
-
+        
         return nparr
