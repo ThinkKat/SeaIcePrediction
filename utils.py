@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-def dataGenerartor(path, X, y = None, X_dt =None, y_dt=None, BATCH_SIZE = 8, transpose = False, usePath = False):
+def dataGenerartor(path, X, y = None, X_dt =None, y_dt=None, BATCH_SIZE = 8, transpose = False):
     X_batch_data = []
     y_batch_data = []
     i = 0
@@ -9,7 +9,7 @@ def dataGenerartor(path, X, y = None, X_dt =None, y_dt=None, BATCH_SIZE = 8, tra
         y = [None] * len(X)
 
     for (features, label) in zip(X, y):
-        obs =  obs_generator(path, features, label, transpose = transpose, usePath=usePath)
+        obs =  obs_generator(path, features, label, transpose = transpose)
         X_data = obs[0]
         y_data = obs[1]
         if X_dt is not None:
@@ -25,18 +25,11 @@ def dataGenerartor(path, X, y = None, X_dt =None, y_dt=None, BATCH_SIZE = 8, tra
             X_batch_data = []
             y_batch_data = []
 
-def obs_generator(path, features, label=None, transpose=False, usePath=False):
-    '''
-
-    usePath: using os.path.join (if False, faster than using usePath, but you have to check the file path)
-    '''
+def obs_generator(path, features, label=None, transpose=False):
     
     featuresArr = []
     for feature in features:
-        if usePath:
-            feature_path = os.path.join(path, feature)
-        else:
-            feature_path = path + feature
+        feature_path = path + feature
         featureArr = np.load(feature_path)
         # transpose
         if transpose:
@@ -47,10 +40,7 @@ def obs_generator(path, features, label=None, transpose=False, usePath=False):
     featuresArr = np.array(featuresArr)
 
     if label is not None:
-        if usePath:
-            label_path = os.path.join(path, label)
-        else:
-            label_path = path + feature
+        label_path = path + feature
         labelArr = np.load(label_path)
         if transpose:
             labelArr = np.transpose(labelArr).reshape(1, -1)
