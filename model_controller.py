@@ -43,7 +43,7 @@ class ModelController:
             self.history = self.model.fit(
                 x = dataset.repeat().batch(batch_size), epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset.repeat().batch(1), steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)
         else:
-            self.history = model.fit(
+            self.history = self.model.fit(
                 x = dataset[0], y=dataset[1], batch_size = batch_size, epochs = epochs, callbacks = callbacks, shuffle = shuffle, validation_data = val_dataset, steps_per_epoch = steps_per_epoch, validation_steps = validation_steps)
 
         return self.history
