@@ -10,6 +10,7 @@ class DataGenerator:
         self.X_val_data = valDataset[0]
         self.y_val_data = valDataset[1]
         self.transpose = transpose
+        self.usePath = usePath
         self.X_dt = X_dt
         self.y_dt = y_dt
 
@@ -31,28 +32,28 @@ class DataGenerator:
 
     def _getTrainGenerator(self):
         for (X, y) in zip(self.X_train_data, self.y_train_data):
-            obs = obs_generator(self.path, X, y,usePath=usePath)
+            obs = obs_generator(self.path, X, y, usePath=self.usePath)
             X_data = self.X_dt.transform(obs[0])
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
 
     def _getValGenerator(self):
         for (X, y) in zip(self.X_val_data, self.y_val_data):
-            obs = obs_generator(self.path, X, y,usePath=usePath)
+            obs = obs_generator(self.path, X, y,usePath=self.usePath)
             X_data = self.X_dt.transform(obs[0])
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
 
     def _getTrainTransposeGenerator(self):
         for (X, y) in zip(self.X_train_data, self.y_train_data):
-            obs = obs_generator(self.path, X, y, True,usePath=usePath)
+            obs = obs_generator(self.path, X, y, True,usePath=self.usePath)
             X_data = self.X_dt.transform(obs[0])
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
 
     def _getValTransposeGenerator(self):
         for (X, y) in zip(self.X_val_data, self.y_val_data):
-            obs = obs_generator(self.path, X, y, True,usePath=usePath)
+            obs = obs_generator(self.path, X, y, True,usePath=self.usePath)
             X_data = self.X_dt.transform(obs[0])
             y_data = self.y_dt.transform(obs[1])
             yield X_data, y_data
